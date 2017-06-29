@@ -51,11 +51,10 @@ services:
 
   # Grunt
   grunt:
-      restart: on-failure
       build: docker/grunt
       container_name: grunt
       volumes:
-          - $HOME/src/php/waf_websites/waf-website-afl:/src
+          - $HOME/src/php/waf_websites/waf-website-fo:/src
 
   # To create email during devloppement
   maildev:
