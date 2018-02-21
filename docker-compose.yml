@@ -3,7 +3,6 @@ version: '2'
 services:
 
   ssl:
-    restart: on-failure
     image: nginx
     container_name: ssl-afl
     ports:
@@ -18,7 +17,6 @@ services:
 
   # Web Server PHP 5.6 + Apache 2
   web:
-    restart: on-failure
     build: docker/php5apache
     container_name: web-afl
     ports:
@@ -38,7 +36,6 @@ services:
 
   # Database MySQL
   localdb:
-      restart: on-failure
       image: mariadb
       container_name: localdb
       volumes:
@@ -49,16 +46,10 @@ services:
       environment:
        - MYSQL_ROOT_PASSWORD=root # Mot de passe par defaut pour l'utisateur root
 
-  # Grunt
-  grunt:
-      build: docker/grunt
-      container_name: grunt
-      volumes:
-          - $HOME/src/php/waf_websites/waf-website-fo:/src
+
 
   # To create email during devloppement
   maildev:
-      restart: on-failure
       image: djfarrelly/maildev
       container_name: maildev
       ports:
@@ -66,7 +57,6 @@ services:
 
   # PhpMyAdmin
   phpmyadmin:
-    restart: on-failure
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     links:
@@ -78,7 +68,6 @@ services:
 
   # Infogreffe
   infogreffe:
-    restart: on-failure
     build: docker/infogreffe
     container_name: infogreffe
     ports:
@@ -86,12 +75,3 @@ services:
     command: test_wkf:123:1000:1000
     volumes:
        - $HOME/src/php/waf_webservices/edi/config/id_rsa_test.pub:/home/test_wkf/.ssh/keys/id_rsa.pub
-
-  # navigateur
-  googlechrome:
-    image: selenium/standalone-chrome
-    container_name: googlechrome
-    ports:
-        - "4444:4444"
-    links:
-       - web:afl.wkf.net.dev
