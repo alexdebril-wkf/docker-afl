@@ -36,7 +36,7 @@ services:
 
   # Database MySQL
   localdb:
-      image: mariadb
+      image: mariadb:10.1
       container_name: localdb
       volumes:
         - /var/data/mariadb:/var/lib/mysql # Commenter la ligne des volumes pour une base de données non persistente
